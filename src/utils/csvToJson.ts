@@ -10,7 +10,7 @@ const parseCsv = (data: string, options?: Options): object[] => {
 
     const headers = lines[0].split(",").map(header => header.trim());
 
-    const jsonData = lines.slice(1).map(line => {
+    const parsedCsv = lines.slice(1).map(line => {
         const values = line.split(options?.delimiter || ",").map(value => value.trim());
         return headers.reduce((acc, header, index) => {
             acc[header] = values[index];
@@ -18,10 +18,11 @@ const parseCsv = (data: string, options?: Options): object[] => {
         }, {} as Record<string, string>);
     });
 
-    return jsonData;
+    return parsedCsv;
 };
 
-export const csvToJson = async (filePath: string): Promise<Record<string, any>[]> => {
-    const data = await promises.readFile(path.resolve(filePath), "utf8");
-    return parseCsv(data);
+export const csvToJson = (data: string, options?: Options): string => {
+    const parsedData = parseCsv(data, options);
+    const json = JSON.stringify(parsedData);
+    return json;
 }
