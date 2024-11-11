@@ -4,7 +4,7 @@ const args = process.argv.slice(2);
 
 const cli = new CLI();
 
-const greetCommand = new Command("greet", "Greets the user", params => { // TODO: Fix the any type
+const greetCommand = new Command("greet", "Greets the user", params => {
     const name = params["--name"] || "Stranger";
     console.log(`Hello, ${name}`);
     console.log('params', params);
