@@ -1,4 +1,4 @@
-import { CLI, Command, Parameter } from "./parser/classes";
+import { CLI, Command, Parameter } from "./lib/cli";
 
 const args = process.argv.slice(2);
 
