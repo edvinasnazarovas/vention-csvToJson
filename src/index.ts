@@ -1,20 +1,22 @@
 import { resolve } from "path";
-import { CLI, Command, Flag } from "./utils/cli";
+import { CLI, Command, Flag } from "./lib/cli";
 import { promises } from "fs";
-import { csvToJson } from "./utils/csvToJson";
+import { csvToJson } from "./lib/csvToJson";
+import { writeFile } from "fs/promises";
+import { Logger } from "./lib/logger";
 
 const args = process.argv.slice(2);
 
 const cli = new CLI();
 
+const logger = new Logger();
+
 const greetCommand = new Command("greet", "Greets the user", params => {
-    const name = params["--name"] || "Stranger";
-    console.log(`Hello, ${name}\nHere is your provided pathname: ${params["path"]}`);
+    const name = params["name"] || "Stranger";
+    logger.info(`Hello, ${name}`);
 });
 
-greetCommand.addFlag(new Flag("--name", "Name of the user", "Stranger"));
-
-greetCommand.addRequiredArg(new Flag("path", "Pathname", null));
+greetCommand.addRequiredArg(new Flag("name", "Name of the user", "Stranger"));
 
 cli.addCommand(greetCommand);
 
@@ -28,21 +30,37 @@ const csvConverterCommand = new Command("csvToJson", "Converts csv to json", asy
         await new Promise((resolve, reject) => {
             process.stdin.on("data", chunk => data += chunk);
             process.stdin.on("end", () => resolve(void(0)));
-            process.stdin.on("error", () => console.error("Failed to handle passed data")); // TODO: Add custom logger here
+            process.stdin.on("error", () => logger.error("Failed to handle passed data"));
         });
         } else {
-            console.error("No data or path provided") // TODO: Add custom logger here
+            logger.error("No data or path provided");
             return;
         }
 
     const json = csvToJson(data);
 
-    console.log(json);
+    const savePath = params["savePath"];
+    if (savePath) {
+        if (typeof savePath === "boolean") {
+            logger.error("Something ain't right chief, save path cannot be a boolean");
+            return json;
+        }
+        
+        await writeFile(savePath, json);
+    }
+
+    const shouldLog = params["--log"];
+
+    if (shouldLog) {
+        console.log(json);
+    }
 
     return json;
 });
 
 csvConverterCommand.addRequiredArg(new Flag("path", "Path to csv file"));
+csvConverterCommand.addRequiredArg(new Flag("savePath", "Path specifying where to store the converted data json file"));
+csvConverterCommand.addFlag(new Flag("--log", "Flag to log the converted json out"));
 
 cli.addCommand(csvConverterCommand);
 

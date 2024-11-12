@@ -1,3 +1,7 @@
+import { Logger } from "./logger";
+
+const logger = new Logger();
+
 export class Flag {
     public name: string;
     public description: string;
@@ -55,7 +59,7 @@ export class CLI {
         const command = this.commands.find(cmd => cmd.name === commandName);
 
         if (!command) {
-            console.error(`Unknown command: ${command}`); // TODO: Add custom logger here
+            logger.error(`Unknown command: ${command}`);
             return;
         }
 
@@ -88,7 +92,7 @@ export class CLI {
                         argMap[currentFlag.name] = true;
                     }
                 } else {
-                    console.error(`Option not found: ${arg}`); // TODO: Add custom logger here
+                    logger.error(`Option not found: ${arg}`);
                     return;
                 }
             }
