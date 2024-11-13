@@ -26,3 +26,12 @@ export const csvToJson = (data: string, options?: Options): string => {
     const json = JSON.stringify(parsedData);
     return json;
 }
+
+export function csvToJsonLine(headers: string[], line: string) {
+    const values = line.split(',');
+    const jsonObject = headers.reduce((obj: Record<string, string>, header, index) => {
+      obj[header] = values[index];
+      return obj;
+    }, {});
+    return jsonObject;
+  }

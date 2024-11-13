@@ -1,3 +1,5 @@
+import { writeFile } from "fs/promises";
+
 enum Level {
     info="INFO",
     warn="WARN",
@@ -21,6 +23,10 @@ interface Options {
     colors: Record<Level, Colors>
 }
 
+interface LogOptions {
+    saveToFile?: boolean
+}
+
 export class Logger {
     options: Options = {
         colors: {
@@ -34,19 +40,23 @@ export class Logger {
         return `${color}${message}${Colors.reset}`;
     }
 
-    private log(message: string, level: Level) {
-        console.log(`| ${this.colorize(level, this.options.colors[level])} | ${message}`);
+    log(message: string, level?: Level) {
+        console.log(level ? `| ${this.colorize(level, this.options.colors[level])} | ${message}` : message);
     }
 
-    info(message: string) {
+    async logToFile(message: string, path: string, level?: Level) {
+        await writeFile(path, level ? `| ${this.colorize(level, this.options.colors[level])} | ${message}`: message);
+    }
+
+    info(message: string, options?: LogOptions) {
         this.log(message, Level.info);
     }
 
-    warn(message: string) {
+    warn(message: string, options?: LogOptions) {
         this.log(message, Level.warn);
     }
 
-    error(message: string) {
+    error(message: string, options?: LogOptions) {
         this.log(message, Level.error);
     }
 }
