@@ -18,16 +18,12 @@ type ArgMap = Record<string, string | true | null | undefined>;
 
 type Action = (params: ArgMap) => void;
 
-export class Command {
-    public name: string;
-    public description: string;
+export class CLI {
     public action: Action;
     public flags: Flag[] = [];
     public requiredArgs: Flag[] = [];
-
-    constructor(name: string, description: string, action: Action) {
-        this.name = name;
-        this.description = description;
+    
+    constructor(action: Action) {
         this.action = action;
     }
 
@@ -40,36 +36,15 @@ export class Command {
         this.requiredArgs.push(arg);
         return;
     } 
-}
-
-export class CLI {
-    private commands: Command[];
-    
-    constructor() {
-        this.commands = [];
-    }
-
-    public addCommand(command: Command) {
-        this.commands.push(command);
-        return this;
-    }
 
     public parse(args: string[]) {
-        const [commandName, ...restArgs] = args;
-        const command = this.commands.find(cmd => cmd.name === commandName);
-
-        if (!command) {
-            logger.error(`Unknown command: ${command}`);
-            return;
-        }
-
         const argMap: ArgMap = {};
 
         let requiredArgIndex = 0;
 
-        for (const arg of restArgs) {
-            if (!arg.startsWith("--") && requiredArgIndex < command.requiredArgs.length) {
-                const argName = command.requiredArgs[requiredArgIndex].name;
+        for (const arg of args) {
+            if (!arg.startsWith("--") && requiredArgIndex < this.requiredArgs.length) {
+                const argName = this.requiredArgs[requiredArgIndex].name;
                 argMap[argName] = arg;
                 requiredArgIndex++;
             } else {
@@ -77,14 +52,14 @@ export class CLI {
             }
         }
 
-        for (let i = 0; i < restArgs.length; i++) { // Iterate through args and set arg value to the next arg, or to true if the next arg is not present or an option
-            const arg = restArgs[i];
+        for (let i = 0; i < args.length; i++) { // Iterate through args and set arg value to the next arg, or to true if the next arg is not present or an option
+            const arg = args[i];
             if (arg.startsWith("--")) {
-                const currentFlag = command.flags.find(flag => flag.name === arg);
+                const currentFlag = this.flags.find(flag => flag.name === arg);
 
                 if (currentFlag) {
                     i++;
-                    const nextArg = restArgs[i];
+                    const nextArg = args[i];
 
                     if (nextArg && !nextArg.startsWith("--")) {
                         argMap[currentFlag.name] = nextArg;
@@ -98,21 +73,10 @@ export class CLI {
             }
         }
 
-        command.action(argMap);
+        this.action(argMap);
     }
 
     public help() {
-        console.log("Available Commands:");
-        for (const command of this.commands) {
-            console.log(`\nCommand: ${command.name} - ${command.description}`);
-            if (command.requiredArgs.length > 0) {
-                console.log("  Required Arguments:");
-                command.requiredArgs.forEach(arg => console.log(`    ${arg.name}: ${arg.description}`));
-            }
-            if (command.flags.length > 0) {
-                console.log("  Flags:");
-                command.flags.forEach(flag => console.log(`    --${flag.name}: ${flag.description} (Default: ${flag.defaultValue})`));
-            }
-        }
+        
     }
 }

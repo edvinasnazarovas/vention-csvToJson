@@ -1,5 +1,5 @@
 import { createReadStream, createWriteStream } from "fs";
-import { Command, Flag } from "../lib/cli";
+import { CLI, Flag } from "../lib/cli";
 import { ErrorHandler } from "../lib/error";
 import { Logger } from "../lib/logger";
 import { csvToJsonLine } from "../lib/csvToJson";
@@ -9,7 +9,7 @@ const error = new ErrorHandler();
 
 const logger = new Logger();
 
-export const csvConverterCommand = new Command(undefined, "Converts csv to json", async params => {
+export const csvConverter = new CLI(async params => {
     const path = params["path"];
     const delimiter = ","; 
     let data = "";
@@ -103,7 +103,7 @@ export const csvConverterCommand = new Command(undefined, "Converts csv to json"
     }
 });
 
-csvConverterCommand.addRequiredArg(new Flag("path", "Path to csv file"));
-csvConverterCommand.addRequiredArg(new Flag("savePath", "Path specifying where to store the converted data json file"));
-csvConverterCommand.addFlag(new Flag("--log", "Flag to log the converted json out"));
-csvConverterCommand.addFlag(new Flag("--db", "Flag to save the output to a database"));
+csvConverter.addRequiredArg(new Flag("path", "Path to csv file"));
+csvConverter.addRequiredArg(new Flag("savePath", "Path specifying where to store the converted data json file"));
+csvConverter.addFlag(new Flag("--log", "Flag to log the converted json out"));
+csvConverter.addFlag(new Flag("--db", "Flag to save the output to a database"));

@@ -1,10 +1,5 @@
-import { CLI } from "./lib/cli";
-import { csvConverterCommand } from "./commands/csvConverter";
+import { csvConverter } from "./lib/csvConverter";
 
 const args = process.argv.slice(2);
 
-const cli = new CLI();
-
-cli.addCommand(csvConverterCommand);
-
-cli.parse(args);
+csvConverter.parse(args);
