@@ -22,8 +22,10 @@ export class CLI {
     public action: Action;
     public flags: Flag[] = [];
     public requiredArgs: Flag[] = [];
+    public description: string;
     
-    constructor(action: Action) {
+    constructor(description: string, action: Action) {
+        this.description = description;
         this.action = action;
     }
 
@@ -32,7 +34,7 @@ export class CLI {
         return this;
     }
 
-    public addRequiredArg(arg: Flag) {
+    public addArg(arg: Flag) {
         this.requiredArgs.push(arg);
         return;
     } 
@@ -54,7 +56,14 @@ export class CLI {
 
         for (let i = 0; i < args.length; i++) { // Iterate through args and set arg value to the next arg, or to true if the next arg is not present or an option
             const arg = args[i];
+
             if (arg.startsWith("--")) {
+
+                if (arg === "--help") {
+                    this.help();
+                    continue;
+                }
+
                 const currentFlag = this.flags.find(flag => flag.name === arg);
 
                 if (currentFlag) {
@@ -77,6 +86,16 @@ export class CLI {
     }
 
     public help() {
-        
+        logger.log(`Description: ${this.description}\n`);
+
+        logger.log("List of arguments:");
+        for (let i = 0; i < this.requiredArgs.length; i++) {
+            logger.log(`${i}. ${this.requiredArgs[i].name}     ${this.requiredArgs[i].description}`);
+        }
+
+        logger.log("\nList of flags:");
+        for (const flag of this.flags) {
+            logger.log(`${flag.name}     ${flag.description}`);
+        }
     }
 }
