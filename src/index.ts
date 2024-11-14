@@ -96,7 +96,6 @@ const csvConverterCommand = new Command("csvToJson", "Converts csv to json", asy
                 readStream.on('error', (error) => {
                     logger.error(`An error occurred while reading the file: ${error.message}`);
                 });
-``
                 // await logger.logToFile(json, savePath);
             }
 
