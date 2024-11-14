@@ -1,6 +1,0 @@
-CREATE SCHEMA IF NOT EXISTS my_schema;
-
-CREATE TABLE IF NOT EXISTS my_schema.json_rows (
-    id SERIAL PRIMARY KEY,
-    json JSON NOT NULL
-);

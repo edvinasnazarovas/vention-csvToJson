@@ -100,4 +100,19 @@ export class CLI {
 
         command.action(argMap);
     }
+
+    public help() {
+        console.log("Available Commands:");
+        for (const command of this.commands) {
+            console.log(`\nCommand: ${command.name} - ${command.description}`);
+            if (command.requiredArgs.length > 0) {
+                console.log("  Required Arguments:");
+                command.requiredArgs.forEach(arg => console.log(`    ${arg.name}: ${arg.description}`));
+            }
+            if (command.flags.length > 0) {
+                console.log("  Flags:");
+                command.flags.forEach(flag => console.log(`    --${flag.name}: ${flag.description} (Default: ${flag.defaultValue})`));
+            }
+        }
+    }
 }

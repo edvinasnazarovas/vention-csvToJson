@@ -1,6 +1,3 @@
-import { promises } from "fs";
-import path from "path";
-
 interface Options {
     delimiter?: string
 }
