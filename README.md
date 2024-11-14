@@ -1,4 +1,4 @@
-# Vention Money Lib
+# csvToJson
 A lightweight JavaScript/TypeScript CLI application for converting CSV to JSON.
 
 ## Table of Contents
@@ -7,7 +7,6 @@ A lightweight JavaScript/TypeScript CLI application for converting CSV to JSON.
 - [Examples](#examples)
 - [Development](#development)
 - [Testing](#testing)
-- [Alternatives](#alternatives)
 
 ## Installation
 Either download a file from the releases section, or build it yourself.
