@@ -1,7 +1,3 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
-
-import { resolve } from "path";
 import { CLI, Command, Flag } from "./lib/cli";
 import { createReadStream, createWriteStream, promises} from "fs";
 import { csvToJson, csvToJsonLine } from "./lib/csvToJson";
