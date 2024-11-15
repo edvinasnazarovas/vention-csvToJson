@@ -17,7 +17,7 @@ The application takes two arguments:
 * `path` - Path to your csv file.
 * `savePath` - Path specifying where to save the converted output.
 ### Piping the output
-You are also able to pipe the output into a different application.
+You are also able to pipe the input into the converter and output onto a different application.
 ### Flags
 The application takes in the following flags:
 * `--help` - Displays available arguments and flags.
@@ -44,6 +44,11 @@ csvToJson ./csv.csv --db
 ### Convert a csv file and pipe the output
 ```bash
 csvToJson ./csv.csv | someApp
+```
+
+### Pipe input and output
+```bash
+cat csv.csv | csvToJson | grep "header"
 ```
 
 ## Development
