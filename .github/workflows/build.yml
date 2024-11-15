@@ -30,7 +30,7 @@ jobs:
       - name: Create executable (optional)
         run: |
           npm install -g pkg@5.8.1
-          pkg -t latest-linux,latest-mac,latest-win .
+          pkg -t latest-linux,latest-mac,latest-win ./dist/index.js
 
       - name: List dist directory (debugging)
         run: ls -R ./dist
