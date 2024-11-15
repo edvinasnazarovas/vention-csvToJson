@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "bin": {
-    "csvToJson": "./src/index.js"
+    "csvToJson": "./dist/index.js"
   },
   "scripts": {
     "test": "vitest",
