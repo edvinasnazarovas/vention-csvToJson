@@ -4,6 +4,9 @@
   "description": "Commandline application that takes in CSV as input and converts it to JSON",
   "main": "index.js",
   "type": "module",
+  "bin": {
+    "csvToJson": "./src/index.js"
+  },
   "scripts": {
     "test": "vitest",
     "dev": "npx ts-node ./src/index.ts",
