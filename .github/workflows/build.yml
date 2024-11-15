@@ -29,9 +29,6 @@ jobs:
 
       - name: Create executable (optional)
         run: |
-          # Optional: Pack your CLI app for distribution
-          # Replace this with your preferred packaging tool
-          # E.g., using pkg to create a standalone executable
           npm install -g pkg
           pkg -t node20-linux,node20-mac,node20-win .
 

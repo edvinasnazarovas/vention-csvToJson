@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "dev": "npx ts-node ./src/index.ts"
+    "dev": "npx ts-node ./src/index.ts",
+    "build": "tsc"
   },
   "keywords": [
     "csv",
