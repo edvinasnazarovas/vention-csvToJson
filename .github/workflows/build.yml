@@ -29,7 +29,7 @@ jobs:
 
       - name: Create executable (optional)
         run: |
-          npm install -g pkg
+          npm install -g pkg@5.8.1
           pkg -t node20-linux,node20-mac,node20-win .
 
       - name: Upload release assets
