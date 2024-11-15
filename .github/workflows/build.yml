@@ -32,6 +32,9 @@ jobs:
           npm install -g pkg@5.8.1
           pkg -t latest-linux,latest-mac,latest-win .
 
+      - name: List dist directory (debugging)
+        run: ls -R ./dist
+
       - name: Upload release assets
         id: upload-release
         uses: actions/upload-artifact@v3
