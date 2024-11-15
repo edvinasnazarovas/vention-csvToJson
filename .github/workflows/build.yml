@@ -30,7 +30,7 @@ jobs:
       - name: Create executable (optional)
         run: |
           npm install -g pkg@5.8.1
-          pkg -t node20-linux,node20-mac,node20-win .
+          pkg -t latest-linux,latest-mac,latest-win .
 
       - name: Upload release assets
         id: upload-release
