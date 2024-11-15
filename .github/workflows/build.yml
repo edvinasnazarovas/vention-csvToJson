@@ -68,3 +68,11 @@ jobs:
           asset_path: ./dist/cli-app
           asset_name: cli-app-${{ github.event.inputs.version }}.tar.gz
           asset_content_type: application/gzip
+      - name: Create Release Branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b release_v${{ github.event.inputs.version }}
+          git push origin release_v${{ github.event.inputs.version }}
