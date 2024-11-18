@@ -29,8 +29,11 @@ jobs:
 
       - name: Create executable (optional)
         run: |
-          npm install -g pkg
-          pkg -t node20-linux,node20-mac,node20-win .
+          npm install -g pkg@5.8.1
+          pkg -t latest-linux,latest-mac,latest-win ./dist/index.js
+
+      - name: List dist directory (debugging)
+        run: ls -R ./dist
 
       - name: Upload release assets
         id: upload-release
