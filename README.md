@@ -76,3 +76,5 @@ To run tests in watch mode, use:
 ```bash
 npm run test -- --watch
 ```
+## Known Issues
+--readDb is not a stream and instead reads all the rows from the database and stores them in memory.
