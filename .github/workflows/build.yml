@@ -35,8 +35,14 @@ jobs:
       - name: List dist directory (debugging)
         run: ls -R ./dist
 
+      - name: Copy files to a temporary directory
+        run: cp -r ./dist ./dist-temp
+
       - name: Package release assets
-        run: tar -czvf ./dist/cli-app-${{ github.event.inputs.version }}.tar.gz ./dist
+        run: tar -czvf ./dist/cli-app-${{ github.event.inputs.version }}.tar.gz ./dist-temp
+
+      - name: Clean up temporary directory
+        run: rm -rf ./dist-temp
 
       - name: Upload release assets
         id: upload-release
