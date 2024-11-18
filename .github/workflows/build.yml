@@ -42,7 +42,9 @@ jobs:
         run: ls -R ./dist-temp
 
       - name: Package release assets
-        run: tar -czvf ./dist/cli-app-${{ github.event.inputs.version }}.tar.gz ./dist-temp
+        run: |
+          tar -czvf ./dist/cli-app-${{ github.event.inputs.version }}.tar.gz ./dist-temp
+          echo "Packaged file: ./dist/cli-app-${{ github.event.inputs.version }}.tar.gz"
 
       - name: Verify the packaged asset exists
         run: ls -lh ./dist/cli-app-${{ github.event.inputs.version }}.tar.gz
