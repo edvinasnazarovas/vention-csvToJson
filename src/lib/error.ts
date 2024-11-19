@@ -2,32 +2,20 @@ import { Logger } from "./logger";
 
 const logger = new Logger();
 
-class ErrorMessage {
-    message: string;
-    error?: string;
-    code?: string;
+export class AppError extends Error {
+    constructor(message: string, public error?: string, public code?: string, isOperational: boolean = true) {
+        super(message);
 
-    constructor(message: string, error?: string, code?: string) {
-        this.message = message;
-        this.error = error;
-        this.code = code;
-    }
-}
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
 
-interface Options {
-    onFatal: (message: ErrorMessage) => void;
-}
-
-export class ErrorHandler {
-    private options: Options = {
-        onFatal: (message) => {logger.error(message.message); process.exit(1)}
-    };
-
-    constructor(options?: Options) {
-        this.options = {...this.options, ...options};
+        this.name = "App Error";
+        logger.error(`${message}${error ? `: ${error}` : ""}${code ? ` (Code: ${code})` : ""}`);
     }
 
-    fatal(message: string, error?: string, code?: string) {
-        this.options.onFatal(new ErrorMessage(message, error, code));
+    static fatal(message: string, error?: string, code?: string): never {
+        logger.error(`${message}${error ? `: ${error}` : ""}${code ? ` (Code: ${code})` : ""}`);
+        throw new AppError(message, error, code, false);
     }
 }
