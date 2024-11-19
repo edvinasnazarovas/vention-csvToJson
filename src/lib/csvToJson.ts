@@ -127,12 +127,12 @@ export class CsvParser {
                         const processedLine = this.processLine(line, headers, delimiter);
 
                         if (!isFirstLine) {
-                            writeStream?.write(",");
+                            writeStream?.write(",\n");
                         } else {
                             isFirstLine = false;
                         }
 
-                        writeStream?.write(`{${processedLine}}\n`);
+                        writeStream?.write(`{${processedLine}}`);
                     }
                 }
             });
