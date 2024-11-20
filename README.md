@@ -26,29 +26,29 @@ The application takes in the following flags:
 * `--readDb` - Reads the saved rows from the application's internal sqlite3 database.
 * `--d` - Specify the CSV delimeter.
 
-## Examples
+## Examples running in dev mode
 ### Convert a csv file and save it to another file:
 ```bash
-csvToJson ./csv.csv ./output.json
+npm run dev ./csv.csv ./output.json
 ```
 ### Convert a csv file and log the output
 ```bash
-csvToJson ./csv.csv --log
+npm run dev ./csv.csv --log
 ```
 
 ### Convert a csv file and save it to the application's sqlite3 database
 ```bash
-csvToJson ./csv.csv --db
+npm run dev ./csv.csv --db
 ```
 
 ### Convert a csv file and pipe the output
 ```bash
-csvToJson ./csv.csv | someApp
+npm run dev ./csv.csv | someApp
 ```
 
 ### Pipe input and output
 ```bash
-cat csv.csv | csvToJson | grep "header"
+cat csv.csv | npm run dev | grep "header"
 ```
 
 ## Development
