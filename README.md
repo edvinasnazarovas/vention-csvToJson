@@ -79,8 +79,8 @@ npm run test -- --watch
 
 ## Performance
 
-### Processor runtime
-![alt text](image-1.png)
+### Runtime
+![alt text](image.png)
 
 ### Total memory usage
-![alt text](image-2.png)
+![alt text](image-1.png)
