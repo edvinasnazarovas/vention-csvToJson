@@ -148,6 +148,10 @@ export class CsvParser {
                         }
 
                         writeStream?.write(`{${processedLine}}`);
+
+                        if (options.log) {
+                            logger.log(`{${processedLine}},`);
+                        }
                     }
                 }
             });
