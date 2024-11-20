@@ -21,6 +21,16 @@ export class CsvParser {
         this.options = {...this.options, ...options};
     }
 
+    /**
+     * Recursive method that processes csv lines and returns the processed json data string
+     * @param line The csv line to be parsed
+     * @param headers The csv headers
+     * @param delimiter The delimiter of the csv data
+     * @param processedLine The processed data
+     * @param charIndex The current char position of the processor
+     * @param fieldIndex The current index of the field being processed
+     * @returns JSON data string
+     */
     private processLine = (line: string, headers: string[], delimiter: string, processedLine: string = "", charIndex: number = 0, fieldIndex: number = 0): string => { // maybe add a parsed line validation check?
         if (fieldIndex >= headers.length) { // If the amount of processed fields equals the amount of headers, return the line
             return processedLine;
@@ -65,6 +75,11 @@ export class CsvParser {
         return this.processLine(line, headers, delimiter, processedLine, charIndex, fieldIndex); // rinse and repeat until the line is processed
     };
 
+    /**
+     * Heuristic method for infering the delimiter from a chunk of csv data
+     * @param lines Array of csv lines
+     * @returns The csv delimiter char
+     */
     private inferDelimiter(lines: string[]) {
         const delimiters = [",", "\t", ";", "|"];
         const scores: Record<string, {consistency: 1 | 0, avgFields: number, heuristic: number}>  = {};
