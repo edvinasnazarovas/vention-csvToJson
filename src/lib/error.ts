@@ -15,7 +15,6 @@ export class AppError extends Error {
     }
 
     static fatal(message: string, error?: string, code?: string): never {
-        logger.error(`${message}${error ? `: ${error}` : ""}${code ? ` (Code: ${code})` : ""}`);
         throw new AppError(message, error, code, false);
     }
 }
