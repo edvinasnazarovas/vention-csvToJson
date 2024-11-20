@@ -16,10 +16,6 @@ export function handleOptions(options: any) {
 export const csvConverter = new CLI("Converts csv data to json", async (params) => {
     const parser = new CsvParser();
 
-    if (!params.length) {
-        AppError.fatal("No params provided.");
-    }
-
     const path = params["path"];
     const savePath = params["savePath"];
 

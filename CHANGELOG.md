@@ -9,4 +9,4 @@
 * Implement heuristic delimiter detector
 * Implement detection of characters equalling the delimiter in the data itself, and handling it correctly
 * Refactor line processor to not use the built-in JSON methods, and instead process the csv lines recursively and return the processed line directly to improve performance
-* Throw fatal error when no params are provided
+* Throw fatal error when no arguments are provided
