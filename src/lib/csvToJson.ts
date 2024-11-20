@@ -31,7 +31,7 @@ export class CsvParser {
      * @param fieldIndex The current index of the field being processed
      * @returns JSON data string
      */
-    private processLine = (line: string, headers: string[], delimiter: string, processedLine: string = "", charIndex: number = 0, fieldIndex: number = 0): string => { // maybe add a parsed line validation check?
+    public processLine = (line: string, headers: string[], delimiter: string, processedLine: string = "", charIndex: number = 0, fieldIndex: number = 0): string => { // maybe add a parsed line validation check?
         if (fieldIndex >= headers.length) { // If the amount of processed fields equals the amount of headers, return the line
             return processedLine;
         }

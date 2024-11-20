@@ -1,16 +1,16 @@
 import { readFile, unlink, writeFile } from "fs/promises";
 import { afterAll, describe, expect, it } from "vitest";
-import { csvToJsonLine, processFile } from "../lib/csvToJson";
+import { CsvParser } from "../lib/csvToJson";
 
 describe("Tests csv converter", () => {
-
+    const parser = new CsvParser();
 
     it("Tests csv line parser", () => {
         const line = "1,2,3";
         const headers = ["header1", "header2", "header3"];
         const expectedJson = {header1: 1, header2: 2, header3: 3};
 
-        const parsedLine = csvToJsonLine(headers, line);
+        const parsedLine = parser.processLine(line, headers, ",");
 
         expect(parsedLine).toEqual(expectedJson);
     });
@@ -21,7 +21,7 @@ describe("Tests csv converter", () => {
 
         await writeFile("./csv.csv", csv);
 
-        await processFile("./csv.csv", ",", "./test.json");
+        await parser.processFile("./csv.csv", "./test.json");
 
         const output = await readFile("./test.json", "utf-8");
 

@@ -76,3 +76,11 @@ To run tests in watch mode, use:
 ```bash
 npm run test -- --watch
 ```
+
+## Performance
+
+### Processor runtime
+![alt text](image-1.png)
+
+### Total memory usage
+![alt text](image-2.png)
