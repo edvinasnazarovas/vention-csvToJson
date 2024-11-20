@@ -80,7 +80,7 @@ npm run test -- --watch
 ## Performance
 
 ### Runtime
-![alt text](image.png)
+![image](https://github.com/user-attachments/assets/8b0570c7-e46b-4331-b618-f2016dd58fb0)
 
 ### Total memory usage
-![alt text](image-1.png)
+![image-1](https://github.com/user-attachments/assets/6cf9c411-c22e-4b21-979e-9e2349bb3b3d)
