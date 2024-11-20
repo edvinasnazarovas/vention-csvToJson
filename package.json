@@ -10,6 +10,7 @@
   "scripts": {
     "test": "vitest",
     "dev": "npx ts-node ./src/index.ts",
+    "debug": "node --inspect-brk npx ts-node ./src/index.ts",
     "build": "tsc"
   },
   "keywords": [
