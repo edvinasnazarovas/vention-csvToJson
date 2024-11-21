@@ -26,7 +26,7 @@ The application takes in the following flags:
 * `--readDb` - Reads the saved rows from the application's internal sqlite3 database.
 * `--d` - Specify the CSV delimeter.
 
-## Examples
+## Examples running in dev mode
 ### Convert a csv file and save it to another file:
 ```bash
 npm run dev ./csv.csv ./output.json
@@ -76,5 +76,19 @@ To run tests in watch mode, use:
 ```bash
 npm run test -- --watch
 ```
-## Known Issues
---readDb is not a stream and instead reads all the rows from the database and stores them in memory.
+
+## Performance
+
+### v1.1.0
+#### Runtime
+![image](https://github.com/user-attachments/assets/513cbbf0-a338-4fd8-93eb-d367357feca3)
+
+#### Total memory usage
+![image-1](https://github.com/user-attachments/assets/6cf9c411-c22e-4b21-979e-9e2349bb3b3d)
+
+### v1.2.0
+#### Runtime
+![image](https://github.com/user-attachments/assets/310a00f9-4c40-476e-a1b8-e18533e12bc0)
+
+#### Total memory usage
+![memoryBench](https://github.com/user-attachments/assets/de81c713-5b99-40b4-8b92-277adfe5d256)

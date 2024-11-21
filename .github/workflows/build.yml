@@ -30,17 +30,34 @@ jobs:
       - name: Create executable (optional)
         run: |
           npm install -g pkg@5.8.1
-          pkg -t latest-linux,latest-mac,latest-win ./dist/index.js
+          pkg -t latest-linux,latest-mac,latest-win -o ./dist/cli-app ./dist/index.js
 
-      - name: List dist directory (debugging)
+      - name: List dist directory after build
         run: ls -R ./dist
+
+      - name: Copy files to a temporary directory
+        run: cp -r ./dist ./dist-temp
+
+      - name: List temporary directory (debugging)
+        run: ls -R ./dist-temp
+
+      - name: Package release assets
+        run: |
+          tar -czvf ./dist/cli-app-${{ github.event.inputs.version }}.tar.gz ./dist-temp
+          echo "Packaged file: ./dist/cli-app-${{ github.event.inputs.version }}.tar.gz"
+
+      - name: Verify the packaged asset exists
+        run: ls -lh ./dist/cli-app-${{ github.event.inputs.version }}.tar.gz
+
+      - name: Clean up temporary directory
+        run: rm -rf ./dist-temp
 
       - name: Upload release assets
         id: upload-release
         uses: actions/upload-artifact@v3
         with:
           name: cli-app
-          path: ./dist
+          path: ./dist/cli-app-${{ github.event.inputs.version }}.tar.gz
 
   release:
     runs-on: ubuntu-latest
@@ -65,9 +82,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/cli-app
+          asset_path: ./dist/cli-app-${{ github.event.inputs.version }}.tar.gz
           asset_name: cli-app-${{ github.event.inputs.version }}.tar.gz
           asset_content_type: application/gzip
+
       - name: Create Release Branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
